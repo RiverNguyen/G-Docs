@@ -10,6 +10,7 @@ import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import TaskList from "@tiptap/extension-task-list";
+import Toolbar from "./toolbar";
 
 export const Editor = () => {
   const editor = useEditor({
@@ -51,6 +52,7 @@ export const Editor = () => {
 
   return (
     <div className="size-full overflow-x-auto bg-[#F9FBFD] px-4 print:p-0 print:bg-white print:overflow-visible">
+      <Toolbar />
       <div className="min-w-max flex justify-center w-[816px] py-4 print:p-0 mx-auto print:w-full print:min-w-0">
         <EditorContent editor={editor} />
       </div>
