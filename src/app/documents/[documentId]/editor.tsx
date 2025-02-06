@@ -1,6 +1,8 @@
 "use client";
 
 import { useEditor, EditorContent } from "@tiptap/react";
+import { Color } from "@tiptap/extension-color";
+import Highlight from "@tiptap/extension-highlight";
 import StarterKit from "@tiptap/starter-kit";
 import FontFamily from "@tiptap/extension-font-family";
 import TextStyle from "@tiptap/extension-text-style";
@@ -55,6 +57,10 @@ export const Editor = () => {
     },
     extensions: [
       StarterKit,
+      Color,
+      Highlight.configure({
+        multicolor: true,
+      }),
       FontFamily,
       TextStyle,
       Underline,

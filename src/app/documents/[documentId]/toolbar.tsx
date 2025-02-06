@@ -2,6 +2,8 @@
 
 import { cn } from "@/lib/utils";
 
+import { type Level } from "@tiptap/extension-heading";
+import { type ColorResult, CirclePicker } from "react-color";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,8 +12,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 import { useEditorStore } from "@/store/use-editor-store";
-
-import { type Level } from "@tiptap/extension-heading";
 
 import {
   BoldIcon,
@@ -33,6 +33,56 @@ interface ToolbarButtonProps {
   isActive?: boolean;
   icon: LucideIcon;
 }
+
+const TextColorButton = () => {
+  const { editor } = useEditorStore();
+
+  const value = editor?.getAttributes("textStyle").color || "#000000";
+
+  const onChange = (color: ColorResult) => {
+    editor?.chain().focus().setColor(color.hex).run();
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+          <span className="text-xs">A</span>
+          <div className="h-0.5 w-full" style={{ backgroundColor: value }} />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="p-2.5">
+        <CirclePicker
+          colors={[
+            "#000",
+            "#FFF",
+            "#F44336",
+            "#E91E63",
+            "#9C27B0",
+            "#673AB7",
+            "#3F51B5",
+            "#2196F3",
+            "#03A9F4",
+            "#00BCD4",
+            "#009688",
+            "#4CAF50",
+            "#8BC34A",
+            "#CDDC39",
+            "#FFEB3B",
+            "#FFC107",
+            "#FF9800",
+            "#FF5722",
+            "#795548",
+            "#9E9E9E",
+            "#607D8B",
+          ]}
+          color={value}
+          onChange={onChange}
+        />
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
 
 const HeadingLevelButton = () => {
   const { editor } = useEditorStore();
@@ -291,6 +341,7 @@ const Toolbar = () => {
         <ToolbarButton key={item.label} {...item} />
       ))}
       {/* TODO: Text Color */}
+      <TextColorButton />
       {/* TODO: Highlight Color */}
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
       {/* TODO: Link */}
