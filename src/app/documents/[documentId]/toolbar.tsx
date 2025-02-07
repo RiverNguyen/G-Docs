@@ -715,6 +715,7 @@ const Toolbar = () => {
       },
     ],
   ];
+
   return (
     <div className="bg-[#F1F4F9] px-2.5 py-0.5 rounded-[24px] min-h-[40px] flex items-center gap-x-0.5 overflow-auto">
       {sections[0].map((item) => (
@@ -727,9 +728,11 @@ const Toolbar = () => {
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
       {/* TODO: Heading */}
       <HeadingLevelButton />
+
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
       {/* TODO: Font Size */}
       <FontSizeButton />
+
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
       {sections[1].map((item) => (
         <ToolbarButton key={item.label} {...item} />
@@ -738,6 +741,7 @@ const Toolbar = () => {
       <TextColorButton />
       {/* TODO: Highlight Color */}
       <HighlightColorButton />
+
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
       {/* TODO: Link */}
       <LinkButton />
