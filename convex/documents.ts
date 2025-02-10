@@ -34,12 +34,30 @@ export const get = query({
       throw new ConvexError("Unauthorized");
     }
 
+    const orgId = (user.organization_id ?? undefined) as string | undefined;
+
+    if (search && orgId) {
+      return await ctx.db
+        .query("documents")
+        .withSearchIndex("search_title", (q) => {
+          return q.search("title", search).eq("organizationId", orgId);
+        })
+        .paginate(paginationOpts);
+    }
+
     if (search) {
       return await ctx.db
         .query("documents")
         .withSearchIndex("search_title", (q) => {
           return q.search("title", search).eq("ownerId", user.subject);
         })
+        .paginate(paginationOpts);
+    }
+
+    if (orgId) {
+      return await ctx.db
+        .query("documents")
+        .withIndex("by_organization_id", (q) => q.eq("organizationId", orgId))
         .paginate(paginationOpts);
     }
 
