@@ -4,18 +4,24 @@ import { Building2Icon, CircleUserIcon } from "lucide-react";
 import { SiGoogledocs } from "react-icons/si";
 import { Doc } from "../../../convex/_generated/dataModel";
 import { DocumentMenu } from "./document-menu";
+import { useRouter } from "next/navigation";
 
 interface DocumentRowProps {
   document: Doc<"documents">;
 }
 
 export const DocumentRow = ({ document }: DocumentRowProps) => {
+  const router = useRouter();
+
   const onNewTabClick = () => {
-    window.open(`/document/${document._id}`, "_blank");
+    window.open(`/documents/${document._id}`, "_blank");
   };
 
   return (
-    <TableRow className="cursor-pointer">
+    <TableRow
+      onClick={() => router.push(`/documents/${document._id}`)}
+      className="cursor-pointer"
+    >
       <TableCell className="w-[50px]">
         <SiGoogledocs className="size-6 fill-blue-500" />
       </TableCell>
@@ -31,7 +37,10 @@ export const DocumentRow = ({ document }: DocumentRowProps) => {
       <TableCell className="text-muted-foreground hidden md:table-cell">
         {format(new Date(document._creationTime), "dd MMM, yyyy")}
       </TableCell>
-      <TableCell className="flex items-end">
+      <TableCell
+        onClick={(e) => e.stopPropagation()}
+        className="flex items-end"
+      >
         <DocumentMenu
           documentId={document._id}
           title={document.title}
